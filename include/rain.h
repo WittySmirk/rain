@@ -103,3 +103,24 @@ class InsertQuery {
 		SqliteTable<Cols...> table_;
 		rowType values_;
 };
+
+class Rain {
+	public:
+		Rain(sqlite3* provider);
+		Rain& select();
+
+		template<typename... Cols>
+		InsertQuery<Cols...> insert(SqliteTable<Cols...> table) {
+			return InsertQuery<Cols...>(provider_, table);
+		}
+		template<typename... Cols>
+		SelectQuery<Cols...> from(SqliteTable<Cols...> table) {
+			return SelectQuery<Cols...>();
+		}
+//		Rain& where(std::string expression);
+
+	private:
+		sqlite3* provider_;
+
+};
+

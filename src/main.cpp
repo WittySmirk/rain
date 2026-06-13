@@ -7,39 +7,6 @@ extern "C" {
 }
 #include "rain.h"
 
-
-class Rain {
-	public:
-		Rain(sqlite3* provider);
-		Rain& select();
-
-		template<typename... Cols>
-		InsertQuery<Cols...> insert(SqliteTable<Cols...> table);
-		template<typename... Cols>
-		SelectQuery<Cols...> from(SqliteTable<Cols...> table);
-//		Rain& where(std::string expression);
-
-	private:
-		sqlite3* provider_;
-
-};
-
-Rain::Rain(sqlite3* provider): provider_(provider){}
-
-Rain& Rain::select() {
-	return *this;
-}
-
-template<typename... Cols>
-InsertQuery<Cols...> Rain::insert(SqliteTable<Cols...> table) {
-	return InsertQuery<Cols...>(provider_, table);
-}
-
-template<typename... Cols>
-SelectQuery<Cols...> Rain::from(SqliteTable<Cols...> table) {
-	return SelectQuery<Cols...>();
-}
-
 int main() {
 	sqlite3* sql;
 	int rc; rc = sqlite3_open("mydb.db", &sql);
